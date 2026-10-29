@@ -25,7 +25,7 @@
     <!-- TOP NAVIGATION BAR -->
     <header class="bg-indigo-900 text-white shadow-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-3 cursor-pointer select-none" onclick="handleHeaderTripleClick()" title="Klik 3x untuk Akses Admin Guru">
                 <div class="bg-amber-400 text-indigo-950 font-black p-2 rounded-lg text-lg">
                     <i class="fa-solid fa-microchip"></i>
                 </div>
@@ -81,25 +81,44 @@
                     </select>
                 </div>
 
-                <!-- Rules Box -->
-                <div class="p-4 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 space-y-1.5">
-                    <p class="font-bold flex items-center gap-1.5 text-amber-800">
-                        <i class="fa-solid fa-triangle-exclamation"></i> PETUNJUK & PERATURAN UJIAN CBT:
+                <!-- Comprehensive Exam Instructions Box -->
+                <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200 text-xs text-indigo-950 space-y-2">
+                    <p class="font-bold text-sm text-indigo-900 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-indigo-600 text-base"></i> PETUNJUK CARA MENGERJAKAN UJIAN:
                     </p>
-                    <ul class="list-disc pl-4 space-y-1">
-                        <li>Jumlah soal: <b>50 Soal Pilihan Ganda (A-E)</b>.</li>
-                        <li>Waktu Pengerjaan: <b id="displayTimerRule">60 Menit</b>.</li>
-                        <li><b>Sistem Integritas Aktif:</b> Dilarang membuka tab lain, berpindah aplikasi, atau memperkecil browser. Berpindah tab berturut-turut akan mengakibatkan <b>Ujian Disubmit Otomatis</b>.</li>
-                    </ul>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px] text-slate-700">
+                        <div class="flex gap-2 items-start">
+                            <span class="bg-indigo-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] shrink-0 mt-0.5">1</span>
+                            <span>Pilih salah satu jawaban <b>A, B, C, D, atau E</b> pada setiap soal.</span>
+                        </div>
+                        <div class="flex gap-2 items-start">
+                            <span class="bg-indigo-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] shrink-0 mt-0.5">2</span>
+                            <span>Gunakan tombol <b class="text-amber-700">Ragu-ragu</b> jika belum yakin dengan jawaban.</span>
+                        </div>
+                        <div class="flex gap-2 items-start">
+                            <span class="bg-indigo-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] shrink-0 mt-0.5">3</span>
+                            <span>Gunakan <b>Navigasi Soal</b> untuk berpindah nomor soal secara langsung.</span>
+                        </div>
+                        <div class="flex gap-2 items-start">
+                            <span class="bg-indigo-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] shrink-0 mt-0.5">4</span>
+                            <span>Perhatikan <b class="text-emerald-700">Waktu Mundur</b> pengerjaan (<span id="displayTimerRule">60 Menit</span>).</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Anti-cheat Integrity Warning -->
+                    <div class="pt-2 border-t border-indigo-200/80 text-[11px] text-rose-800 font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-cat text-rose-600"></i>
+                        <span><b>Sistem Anti-Curang:</b> Dilarang pindah tab/aplikasi. Berpindah tab berturut-turut akan mengakibatkan ujian di-submit otomatis.</span>
+                    </div>
                 </div>
 
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
                     <i class="fa-solid fa-play"></i> Mulai Mengerjakan Ujian
                 </button>
             </form>
 
             <div class="p-4 bg-slate-50 border-t border-slate-100 text-center">
-                <button onclick="openAdminModal()" class="text-xs text-slate-500 hover:text-indigo-600 font-medium underline flex items-center justify-center gap-1 mx-auto">
+                <button onclick="openAdminModal()" class="text-xs text-slate-500 hover:text-indigo-600 font-medium underline flex items-center justify-center gap-1 mx-auto cursor-pointer">
                     <i class="fa-solid fa-user-gear"></i> Masuk sebagai Guru / Admin CBT
                 </button>
             </div>
@@ -119,8 +138,14 @@
                     </div>
                 </div>
 
-                <!-- Timer & Anti-Cheat Counter -->
-                <div class="flex items-center space-x-4">
+                <!-- Timer, Help & Anti-Cheat Counter -->
+                <div class="flex items-center space-x-3">
+                    <!-- Instruction Modal Trigger Button -->
+                    <button onclick="openInstructionModal()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg border border-indigo-200 flex items-center gap-1.5 text-xs font-semibold transition cursor-pointer" title="Lihat Petunjuk Pengerjaan">
+                        <i class="fa-solid fa-circle-question text-indigo-600"></i>
+                        <span class="hidden sm:inline">Petunjuk</span>
+                    </button>
+
                     <!-- Cheat Warning Counter -->
                     <div class="bg-rose-50 text-rose-700 px-3 py-1.5 rounded-lg border border-rose-200 flex items-center gap-2 text-xs font-semibold">
                         <i class="fa-solid fa-shield-halved text-rose-500"></i>
@@ -383,8 +408,56 @@
             <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-xs font-bold">
                 Jumlah Pelanggaran: <span id="modalCheatCount">1</span> / <span id="modalMaxCheat">3</span>
             </div>
-            <button onclick="closeCheatModal()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-xs">
+            <button onclick="closeCheatModal()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">
                 Saya Mengerti & Kembali Ujian
+            </button>
+        </div>
+    </div>
+
+    <!-- STUDENT EXAM INSTRUCTION HELP MODAL -->
+    <div id="instructionModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeInstructionModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                <div class="w-10 h-10 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-slate-800">Petunjuk Pengerjaan Ujian CBT</h3>
+                    <p class="text-xs text-slate-500">Panduan lengkap langkah demi langkah</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-700">
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                    <b class="text-indigo-900 block text-xs">1. Memilih Jawaban:</b>
+                    <p>Klik pada opsi jawaban A, B, C, D, atau E. Opsi yang dipilih akan berwarna biru terang.</p>
+                </div>
+
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 space-y-1">
+                    <b class="text-amber-900 block text-xs">2. Tombol Ragu-Ragu:</b>
+                    <p>Jika ragu dengan jawaban Anda, klik tombol <b>"Ragu-Ragu"</b>. Nomor pada navigasi akan berubah warna menjadi kuning.</p>
+                </div>
+
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                    <b class="text-indigo-900 block text-xs">3. Navigasi Warna Soal:</b>
+                    <ul class="list-disc pl-4 space-y-0.5">
+                        <li><span class="inline-block w-2.5 h-2.5 bg-indigo-600 rounded-sm"></span> <b>Biru:</b> Soal sudah dijawab.</li>
+                        <li><span class="inline-block w-2.5 h-2.5 bg-amber-400 rounded-sm"></span> <b>Kuning:</b> Soal ditandai Ragu-ragu.</li>
+                        <li><span class="inline-block w-2.5 h-2.5 bg-slate-200 border border-slate-300 rounded-sm"></span> <b>Abu-abu:</b> Soal belum dijawab.</li>
+                    </ul>
+                </div>
+
+                <div class="p-3 bg-rose-50 rounded-xl border border-rose-200 space-y-1 text-rose-900">
+                    <b class="block text-xs text-rose-950">4. Aturan Keamanan & Pelanggaran Tab:</b>
+                    <p>Dilarang berpindah tab browser, memperkecil jendela, atau membuka aplikasi lain. Setiap kali Anda meninggalkan halaman, sistem akan mencatat pelanggaran secara otomatis.</p>
+                </div>
+            </div>
+
+            <button onclick="closeInstructionModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer">
+                Tutup & Lanjutkan Ujian
             </button>
         </div>
     </div>
@@ -392,31 +465,32 @@
     <!-- ADMIN LOGIN MODAL -->
     <div id="adminLoginModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 shadow-2xl relative">
-            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                <i class="fa-solid fa-xmark text-lg"></i>
+            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer">
+                <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <div class="text-center">
-                <div class="w-12 h-12 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center text-2xl mx-auto mb-2">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                <div class="w-10 h-10 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center font-bold text-lg">
                     <i class="fa-solid fa-user-shield"></i>
                 </div>
-                <h3 class="text-lg font-bold text-slate-800">Login Administrator</h3>
-                <p class="text-xs text-slate-500">Masukkan kata sandi guru untuk mengelola CBT</p>
-            </div>
-            
-            <form onsubmit="submitAdminLogin(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Kata Sandi (Password)</label>
-                    <input type="password" id="adminPasswordInput" required placeholder="Default: admin123" class="w-full px-3.5 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <h3 class="text-base font-bold text-slate-800">Login Akses Admin</h3>
+                    <p class="text-xs text-slate-500">Masuk ke Panel Kontrol Guru</p>
                 </div>
-                <p id="adminLoginError" class="text-xs text-rose-600 hidden font-semibold">Kata sandi salah!</p>
-                <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="closeAdminModal()" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs">
-                        Batal
-                    </button>
-                    <button type="submit" class="w-1/2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl text-xs">
-                        Masuk Admin
-                    </button>
+            </div>
+
+            <form onsubmit="submitAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Kata Sandi (Password)</label>
+                    <input type="password" id="adminPasswordInput" required placeholder="Masukkan kata sandi..." class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm">
                 </div>
+
+                <div id="adminLoginError" class="hidden text-xs text-rose-600 font-semibold bg-rose-50 p-2.5 rounded-lg border border-rose-200">
+                    <i class="fa-solid fa-circle-exclamation"></i> Kata sandi salah! Silakan coba lagi.
+                </div>
+
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">
+                    Masuk Mode Admin
+                </button>
             </form>
         </div>
     </div>
@@ -1092,7 +1166,7 @@
             durationMinutes: 60,
             maxViolations: 3,
             passScore: 75,
-            adminPassword: "admin123"
+            adminPassword: "admin@2627"
         };
 
         let currentStudent = null;
@@ -1110,24 +1184,52 @@
         /* ==========================================================================
            3. INITIALIZATION & ROUTING
            ========================================================================== */
-        window.onload = function() {
-            // Check query param or URL hash if admin mode requested
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('mode') === 'admin') {
+        let titleClickCount = 0;
+        let titleClickTimer = null;
+
+        function handleHeaderTripleClick() {
+            titleClickCount++;
+            clearTimeout(titleClickTimer);
+            if (titleClickCount >= 3) {
+                titleClickCount = 0;
                 openAdminModal();
             } else {
-                // Default view is Student Login
+                titleClickTimer = setTimeout(() => {
+                    titleClickCount = 0;
+                }, 1000);
+            }
+        }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('admin') === 'true' || urlParams.get('mode') === 'admin') {
+                openAdminModal();
+            } else {
                 switchView('viewLogin');
             }
 
-            // Anti-cheat tab change detection listeners
             document.addEventListener('visibilitychange', handleVisibilityChange);
             window.addEventListener('blur', handleWindowBlur);
 
-            // Populate palette
             renderPalette();
             updateAdminDashboard();
         };
+
+        // Fitur klik rahasia 3x pada logo/judul untuk guru
+        function handleSecretAdminClick() {
+            secretClickCount++;
+            clearTimeout(secretClickTimer);
+
+            if (secretClickCount >= 3) {
+                secretClickCount = 0;
+                document.getElementById('btnAdminAccess').classList.remove('hidden');
+                openAdminModal();
+            } else {
+                secretClickTimer = setTimeout(() => {
+                    secretClickCount = 0;
+                }, 1000);
+            }
+        }
 
         function switchView(viewId) {
             ['viewLogin', 'viewExam', 'viewResult', 'viewAdmin'].forEach(id => {
@@ -1142,13 +1244,18 @@
            4. ADMIN SECURITY & DASHBOARD LOGIC
            ========================================================================== */
         function openAdminModal() {
-            document.getElementById('adminPasswordInput').value = '';
-            document.getElementById('adminLoginError').classList.add('hidden');
-            document.getElementById('adminLoginModal').classList.remove('hidden');
+            const passInput = document.getElementById('adminPasswordInput');
+            const errBox = document.getElementById('adminLoginError');
+            const modal = document.getElementById('adminLoginModal');
+
+            if (passInput) passInput.value = '';
+            if (errBox) errBox.classList.add('hidden');
+            if (modal) modal.classList.remove('hidden');
         }
 
         function closeAdminModal() {
-            document.getElementById('adminLoginModal').classList.add('hidden');
+            const modal = document.getElementById('adminLoginModal');
+            if (modal) modal.classList.add('hidden');
         }
 
         function submitAdminLogin(event) {
@@ -1446,6 +1553,14 @@
 
         function closeCheatModal() {
             document.getElementById('cheatModal').classList.add('hidden');
+        }
+
+        function openInstructionModal() {
+            document.getElementById('instructionModal').classList.remove('hidden');
+        }
+
+        function closeInstructionModal() {
+            document.getElementById('instructionModal').classList.add('hidden');
         }
 
         /* ==========================================================================
